@@ -1,1 +1,1 @@
-https://img.shields.io/badge/language-html-brightgreen
+curl https://img.shields.io/badge/language-html-brightgreen
