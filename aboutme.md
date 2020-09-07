@@ -1,16 +1,17 @@
 ---
 layout: page
 title: About me
-subtitle: Why you'd want to go on a date with me
+subtitle: A little page about me
 ---
 
 My name is Jacob Goldstein. Here are some things about me:
 
 - I love linux
-- I'm extremely into linux
+- I can hack
+- I like coding
 
 What else do you need?
 
 ### My story
 
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my movie](https://en.wikipedia.org/wiki/The_Princess_Bride_%28film%29) and it will answer **all** your questions.
+I was bored of my chromebook, so i installed a _**linux distro**_ called galliumos. this is my website that i started on September 7th, 2020
