@@ -4,10 +4,10 @@ title: About me
 subtitle: Why you'd want to go on a date with me
 ---
 
-My name is Inigo Montoya. I have the following qualities:
+My name is Jacob Goldstein. Here are some things about me:
 
-- I rock a great mustache
-- I'm extremely loyal to my family
+- I love linux
+- I'm extremely into linux
 
 What else do you need?
 
