@@ -30,3 +30,22 @@ find the boot menu. on boot, when the dell or hp logo is showing, spam f2, f12, 
 in windows, go to the start menu go to power, and hold shift and click restart. click on boot from device, and select your usb drive.
 
 -step 2
+go to installing
+
+**Chromebook**
+
+{: .box-warning}
+**Warning:** This will delete all chrome os data
+
+-step 1
+enable developer mode.
+hit esc+reload+power on the top row keyboard. it should say chromeos is missing or damaged. hit ctrl+d and a warning will come up. hit enter, wait five minutes, and you have developer mode.
+
+-step 2
+after you turn back on wifi, sign in as guest, go to mrchromebox.tech and use rw_legacy firmware.
+
+**installing**
+
+on the linux desktop there should be something that says install name of distro. double click that. choose whatever options you like in the installer and finish the installation. reboot and you have linux. on chromebooks you have to press ctrl+L on boot to get linux
+
+thanks for reading and please drop a comment
