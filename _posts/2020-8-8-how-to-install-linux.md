@@ -46,6 +46,7 @@ after you turn back on wifi, sign in as guest, go to mrchromebox.tech and use rw
 
 **installing**
 
-on the linux desktop there should be something that says install name of distro. double click that. choose whatever options you like in the installer and finish the installation. reboot and you have linux. on chromebooks you have to press ctrl+L on boot to get linux
+on the linux desktop there should be something that says install name of distro. double click that. choose whatever options you like in the installer and finish the installation. reboot and you have linux. 
+{: .box-note} Note: on chromebooks you have to press ctrl+l when it says os verification is off. to disable this, use mrchromebox full rom.
 
 thanks for reading and please drop a comment
