@@ -1,1 +1,1 @@
-curl https://img.shields.io/badge/language-html-brightgreen
+https://img.shields.io/badge/language-html-brightgreen/ my beautiful website
