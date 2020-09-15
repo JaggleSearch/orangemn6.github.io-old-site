@@ -17,6 +17,7 @@ Go to the [minecraft BE server Download](minecraft.net/download/server/bedrock) 
 LD_LIBRARY_PATH=. ./bedrock_server 
 ```
 now your server is running! You can stop now or follow the rest of the guide to turn your server into a system service.
+
 **Part 2
 System Service**
 run the following command in your terminal:
