@@ -1,4 +1,3 @@
-# How to install Linux on a chromebook with CHRX
 
 **Note**: to do this, all your chromeOS data will be wiped. I recommend reading through all of this post before starting.
 
@@ -19,7 +18,7 @@ since starting Developer mode wiped all your data, you will have to log in again
 You will have to install and run Chrx, which is really easy. Just one curl command:
 
 
-```cd ; curl -Os https://chrx.org/go && sh go
+``` cd ; curl -Os https://chrx.org/go && sh go
 ```
 
 Copy and paste that command in chrosh shell (ctrl-alt-T and then type shell.)
