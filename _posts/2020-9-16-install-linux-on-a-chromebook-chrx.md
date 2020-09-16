@@ -40,10 +40,11 @@ Press 1 to update the firmware. (When you do this, you will install BIOS [Basic 
 ### Step three: repeat "step six"
 Type this command in chrosh (again):
 
-
 ```
 cd ; curl -Os https://chrx.org/go && sh go 
+
 ```
+
 That will install GaliumOS.
 
 ### Step four: Get into GalliumOS
