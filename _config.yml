@@ -150,7 +150,7 @@ footer-link-col: "#404040"
 # "repository" (make sure the repository is public), (2) Enable Issues in your repository,
 # (3) Install the Utterances app in your repository https://github.com/apps/utterances
 # See more details about the parameters below at https://utteranc.es/
-#utterances:
+utterances:
   repository: "orangemn6/orangemn6.github.io"
   issue-term: title   # Mapping between blog posts and GitHub issues
   theme: github-light # Utterances theme
