@@ -42,7 +42,6 @@ Type this command in chrosh (again):
 
 ```
 cd ; curl -Os https://chrx.org/go && sh go 
-
 ```
 
 That will install GaliumOS.
