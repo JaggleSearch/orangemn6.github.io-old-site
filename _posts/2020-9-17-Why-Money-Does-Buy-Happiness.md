@@ -1,3 +1,7 @@
+---
+layout: post
+title: Why Money Does Buy Happiness
+---
 # Why Money Does Buy Happiness
 
 ## Introduction
