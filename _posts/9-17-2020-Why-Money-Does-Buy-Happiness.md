@@ -1,3 +1,11 @@
+---
+layout: post
+title: Why Money Does Buy Happiness
+subtitle: Weekly Philosophy
+tags: [philosophy]
+comments: true
+---
+
 # Why Money Does Buy Happiness
 
 ## Introduction
