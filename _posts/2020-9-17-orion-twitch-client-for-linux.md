@@ -1,9 +1,3 @@
----
-layout: post
-title: Orion-Twitch Client For Linux
-tags: [linux] [twitch]
-comments: true
----
 # Orion- Twitch Client For Linux
 
 Orion is a free and open source QML / C++ client for Twitch.tv which can use multiple player backends (including mpv). The application runs on Linux, Windows, macOS and Android. Using Orion you can watch live Twitch streams and past broadcasts, and browse or search games and channels using a nice material user interface. What's more, Orion lets you login to Twitch, so you can chat and follow channels (and receive notifications when a channel you follow goes online). The application allows customizing various aspects, like changing the stream quality, switching between light and dark user interface themes, and changing the chat position and font size.
