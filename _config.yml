@@ -11,6 +11,7 @@ title: "Jacob Goldstein's Website"
 # Your name to show in the footer
 author: Jacob Goldstein
 
+favicon: "/avatar-icon.png"
 # --- List of links in the navigation bar --- #
 
 navbar-links:
