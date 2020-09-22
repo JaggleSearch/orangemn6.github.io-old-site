@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Why Money Does Buy Happiness
 
 ## Introduction
