@@ -1,4 +1,8 @@
 ---
+layout: post
+title: Why Money Does Buy Happiness
+subtitle: Philosophy
+tags: [philosophy]
 comments: true
 ---
 
