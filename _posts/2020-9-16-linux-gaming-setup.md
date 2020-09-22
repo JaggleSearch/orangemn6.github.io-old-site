@@ -1,4 +1,8 @@
 ---
+layout: post
+title: Linux Gaming Setup
+subtitle: Lots of Deb!
+tags: [linux]
 comments: true
 ---
 
