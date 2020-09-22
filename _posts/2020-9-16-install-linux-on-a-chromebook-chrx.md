@@ -1,4 +1,8 @@
 ---
+layout: post
+title: Install Linux On a Chromebook With Chrx
+subtitle: For those unwilling to void warranty
+tags: [linux]
 comments: true
 ---
 
