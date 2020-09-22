@@ -1,3 +1,6 @@
+---
+comments: true
+---
 
 **Note**: to do this, all your chromeOS data will be wiped. I recommend reading through all of this post before starting.
 
