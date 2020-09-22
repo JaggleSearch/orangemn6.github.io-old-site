@@ -3,8 +3,6 @@ layout: post
 title: Install linux on any computer
 subtitle: The easy way
 tags: [linux]
-gh-repo: daattali/beautiful-jekyll
-gh-badge: [star, fork, follow]
 comments: true
 ---
 
