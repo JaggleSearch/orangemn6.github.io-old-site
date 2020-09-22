@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Best Linux Distros for Gaming
 There are so many Linux distributions for gamers you would find today. If you’re confused with all the options you could choose from, we got you covered.
 
