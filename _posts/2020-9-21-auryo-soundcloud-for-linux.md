@@ -1,4 +1,7 @@
 ---
+title: Auryo Soundcloud for Linux
+subtitle: App Review
+tags: [linux]
 comments: true
 ---
 
