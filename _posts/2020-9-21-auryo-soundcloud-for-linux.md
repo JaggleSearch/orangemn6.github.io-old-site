@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Auryo- Soundcloud App For Linux
 
 ## If you’re on the hunt for a desktop Soundcloud app for Linux you need look no further than Auyro.
