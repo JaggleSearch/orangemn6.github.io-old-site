@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 his guide goes over setting up your Linux system for gaming. I will include multiple setup instructions for various Linux distributions.  
 <!--more-->
 
