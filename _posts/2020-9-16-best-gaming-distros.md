@@ -1,4 +1,8 @@
 ---
+layout: post
+title: Best Linux Gaming Distros
+subtitle: Big List
+tags: [linux]
 comments: true
 ---
 
