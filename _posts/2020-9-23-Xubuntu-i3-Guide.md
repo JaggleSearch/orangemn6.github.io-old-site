@@ -107,15 +107,6 @@ sudo apt-get install i3
 ```
 
 
-
-
-
-
-
-
-
-
-
 #### V. Install i3ipc-GLib and i3 Workspaces Plugin
 This is a prerequisite for being able to switch between i3 workspaces in XFCE.
 
@@ -127,7 +118,6 @@ sudo apt-get update
 sudo apt-get install libi3ipc-glib
 ```
 
-(The details of this source are found here.)
 Installing individual sources like this should be done rarely. There is a slight security risk, and it can slow down apt updates 
 
 
