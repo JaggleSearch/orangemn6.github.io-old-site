@@ -46,7 +46,7 @@ sudo apt-get install xubuntu-desktop
 (The general idea of this walkthrough should work for XFCE and Mint XFCE as well.)
 
  
- #### II. Create a Spare User
+#### II. Create a Spare User
 Especially if you are already using Xubuntu, creating a spare user account ensures that you can easily return to Xubuntu's default desktop.
 Open 'Users and Groups'
 Click button: 'Add'
@@ -105,6 +105,8 @@ Enter the following in a terminal to install the i3 window manager:
 sudo apt-get update
 sudo apt-get install i3
 ```
+
+
 
 
 
