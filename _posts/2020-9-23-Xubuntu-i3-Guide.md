@@ -5,8 +5,6 @@ comments: true
 ---
 
 Xubuntu with i3 Tiling Windows Walkthrough
-Also look up Manjaro i3. Manjaro is an Arch Linux distro.
-See the Lubuntu version of this here.
 
 The idea of this setup is to achieve the best of both worlds from convenient desktop features and essential i3 features. This walkthrough assumes that you are already familiar with using i3, but you do not have to be in order to complete it. An altered default i3 config file is part of the walkthrough, which adapts default i3 keystrokes to XFCE components. (New and replaced sections of the config file are designated in the file.)
 
@@ -32,7 +30,7 @@ For this guide, you will need to enter terminal commands, but you should not exp
 The i3 site provides the best source about editing the configuration file.
 
 
-I. Install Xubuntu on your system
+#### I. Install Xubuntu on your system
 Install the Xubuntu desktop in another Ubuntu variant by entering the following in a terminal:
 ```
 sudo apt-get update
@@ -48,7 +46,7 @@ sudo apt-get install xubuntu-desktop
 (The general idea of this walkthrough should work for XFCE and Mint XFCE as well.)
 
  
- II. Create a Spare User
+ #### II. Create a Spare User
 Especially if you are already using Xubuntu, creating a spare user account ensures that you can easily return to Xubuntu's default desktop.
 Open 'Users and Groups'
 Click button: 'Add'
@@ -76,7 +74,7 @@ Log in to the new user
 
 
 
-III. Install a new background image manager
+#### III. Install a new background image manager
 Xubuntu's desktop settings manager will not work with this setup, but luckily you can install "nitrogen" to change background images. Only remove xfdesktop4 if you (Unfortunately wallch does not work with i3.)
 ```
 sudo apt-get install nitrogen
@@ -101,7 +99,7 @@ Add any folders you use for background images
 
 
 
-IV. Install the i3 Window Manager
+#### IV. Install the i3 Window Manager
 Enter the following in a terminal to install the i3 window manager: 
 ```
 sudo apt-get update
@@ -116,7 +114,7 @@ sudo apt-get install i3
 
 
 
-V. Install i3ipc-GLib and i3 Workspaces Plugin
+#### V. Install i3ipc-GLib and i3 Workspaces Plugin
 This is a prerequisite for being able to switch between i3 workspaces in XFCE.
 
 
@@ -153,7 +151,7 @@ Installing individual sources like this should be done rarely. There is a slight
 
 
 
-VI. Deactivate Xubuntu's window manager
+#### VI. Deactivate Xubuntu's window manager
 
 Open 'Session and Startup', and go to the 'Session' tab.
 
@@ -172,10 +170,7 @@ Note that you leave the xfce4-panel and Xfsettingsd as they are.
 
 
 
-
-
-
-VII. Activate the i3 window manager
+#### VII. Activate the i3 window manager
  In the 'Session and Startup' window, make sure you are in the 'Application Autostart' tab.
 
 Click the button 'Add' to add i3 to the list of startup applications.
@@ -196,7 +191,7 @@ Click the button: Close
 
 
 
-VIII. Remove non-i3 Keyboard Shortcuts
+#### VIII. Remove non-i3 Keyboard Shortcuts
 Disabling the shortcuts here is about letting i3 take over in this regard, utilizing the i3 config file. Although my general philosophy is to avoid getting technical wherever possible (ie: avoid using a config file when a GUI is available), managing keyboard shortcuts through the i3 config file is inevitable if you want to use i3 at all. For the sake of peace-of-mind, as well as avoiding strange conflicts, I say avoid using 2 different applications for managing keyboard shortcuts. In this guide, ALL keyboard shortcuts are defined by the i3 config, rather than some here and some there. bleh.
 
 Open the 'Keyboard' dialogue.
@@ -214,7 +209,7 @@ Click the button: Close
 
 
 
-IX. Paste i3 config
+#### IX. Paste i3 config
 Let's get down to brass tacks and just do this thing.
 Create a directory in your user's home directory named '.i3'
 The file path will be like: /home/<yourusername>/.i3/
@@ -403,7 +398,7 @@ The i3 site provides the best source for editing the configuration file.
 Here is the magic moment when you can restart your computer and log in with i3 as your window manager.
 
 
-i3 cheat sheet
+#### i3 cheat sheet
 The mod key is the 'super key', also called the 'windows key' (left of the space-bar.)
 
 mod+Enter opens a terminal
@@ -414,7 +409,6 @@ mod+r initiates resize-tile mode
 mod+1, mod+2, etc. (1-0) switches to a different workspace
 mod+Shift+1, mod+Shift+2, etc. (1-0) moves the current window tile to a different workspace
 mod+Shift+` (` is left of '1') Moves a window tile to the scratch-pad workspace
-mod+` Reveals/hides the scratch-pad workspace
 mod+Shift+e initiates Xubuntu's session logout dialogue
 
 
@@ -422,11 +416,7 @@ mod+Shift+e initiates Xubuntu's session logout dialogue
 
 
 
-
-
-
-
-X. Configure the XFCE Panel
+#### X. Configure the XFCE Panel
 
 Right-click the XFCE Panel at the top of the screen.
 Select the menu option 'Panel >' and then 'Panel Preferences'
@@ -448,7 +438,7 @@ Add or remove any application launchers to the panel.
 
 
 
-XI. Create a launcher for i3's config file
+#### XI. Create a launcher for i3's config file
 In the XFCE Panel items list, add a launcher next to the clock in order to create convenient access to the i3 config file.
 
 Edit the launcher details to be as below
