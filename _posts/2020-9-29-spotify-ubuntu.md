@@ -1,7 +1,7 @@
 ---
 layout: post
 title: How to install spotify on ubuntu
-subtitle: This is fun
+subtitle: Music is Power
 tags: [linux]
 comments: true
 ---
