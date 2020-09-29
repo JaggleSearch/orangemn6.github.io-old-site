@@ -8,7 +8,6 @@ comments: true
 
 # 10 Things To Do After Installing Linux
 
-Posted on 28 Sep 2016
 
 ## Welcome to Linux!
 
