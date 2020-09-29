@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 10 Things To Do After Installing Linux
+title: How to install spotify on ubuntu
 subtitle: This is fun
 tags: [linux]
 comments: true
@@ -8,7 +8,7 @@ comments: true
 
 
 
-# HOW TO INSTALL SPOTIFY ON UBUNTU 20.04 – Linux Hint
+# HOW TO INSTALL SPOTIFY ON UBUNTU 20.04
 
 Spotify is a well-versed platform for streaming music. You can easily access millions of distinctive songs on this very platform. Spotify makes it unchallenging to listen to your favorite music with ease. You can conveniently upgrade this software to relish whatever category of music suits your taste. The application encompasses a wide range of songs from classic to modern hip-hop. It offers the feature of listening offline music track after synchronization. It's not only a music application but also offers the contours of radio, audiobook, along with featuring videos and postcards. The Spotify app is highly compatible with Ubuntu and is very easy to download on Ubuntu 20.04. There are two primary methods for installing Spotify on your operating system. This guide directs the most appropriate and quick way to download Spotify using the root account. 
 
