@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Plagiarism In Free Software
-subtitle: Just a Thought...
-tags: [linux][philosophy]
+subtitle: Just a Thought
+tags: [philosophy]
 comments: true
 ---
 # Plagiarism in Free Software
