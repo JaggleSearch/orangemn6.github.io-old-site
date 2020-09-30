@@ -13,7 +13,7 @@ comments: true
 
 ### 1\. Total cost of ownership
 
-![linux less costly than windows][1]![linux less costly than windows][1]
+![linux less costly than windows][1]!
 
 The most obvious advantage is that Linux is free whereas Windows is not.  Windows license cost is different for both desktop and server versions.  In the case of Linux OS either it can be desktop or server, distro comes with no cost.  Not only the OS even the related applications are completely free and [open source][2].
 
@@ -23,8 +23,7 @@ In Windows world, you cannot modify the OS as its source code is not open source
 
 ### 2\. Beginner friendly and easy to use
 
-![linux mint easy to use][3]![linux mint easy to use][3]
-
+![linux mint easy to use][3]!
 Windows OS is one of the simplest desktop OS available today.  Its graphical user-friendliness is exceptional. Though Windows has a relatively minimal learning curve, Linux distros like Ubuntu, Elementary OS, Linux Mint, etc. are striving to improve the user experience that makes the transition from Windows to Linux become smooth and easy.
 
 Linux distros allow the user to choose one of the various desktop environments available: Cinnamon, MATE, KDE, Xfce, LXDE, GNOME, etc. If a Windows user is looking to migrate to Linux, [WINE][4] (Wine Is Not an Emulator) can be installed to have a feel of MS Windows on a Linux system.  
@@ -37,8 +36,7 @@ Traditionally Unix-like systems are known for running for years without a single
 
 ### 4\. Hardware
 
-![linux better hardware support][5]![linux better hardware support][5]
-
+![linux better hardware support][5]!
 Linux systems are known for consuming fewer system resources (RAM, disk space, etc.) when compared to Windows.  Hardware vendors already realized the popularity of Linux and started making Linux compliant hardware/drivers. When running the OS on older hardware, Windows is slower.
 
 Linux distros like Lubuntu, Knoppix, LXLE, antiX, Puppy Linux are best suitable for aging machines.  Old horses like 386 or 486 machines with decent RAM (>= 124/256) can run Linux.  
@@ -53,11 +51,10 @@ Have you heard about Tiny Core Linux? It comes at only 11MB size with a graphica
 
 Following table presents a partial list of Linux distros filtered based on need:
 
-![linux vast software support][6]![linux vast software support][6]
-
+![linux vast software support][6]!
 ### 6\. Security
 
-![linux is more secure than windows][7]![linux is more secure than windows][7]
+![linux is more secure than windows][7]!
 
 Microsoft Windows OS is infamous for being vulnerable to malware, trojans, and viruses.  Linux is almost non-vulnerable and more secure due to its inherent design. Linux does not require the use of commercial anti-virus/anti-malware packages.Linux respects privacy. Unlike windows, it does not generate logs and upload data from your machine. A user should be well aware of Windows privacy policy.
 
@@ -77,7 +74,7 @@ When undergoing a software update or installing/uninstalling software on Linux s
 
 ### 9\. Server segment
 
-![linux server][8]![linux server][8]
+![linux server][8]!
 
 Linux is installed on the majority of servers demonstrating that it is the best choice with a minimal resource footprint. Even rivals are using Linux on their offerings. As software applications are moving to cloud platforms, windows servers are getting phased out to make room for Linux servers. Majority of the supercomputers run on Linux.
 
@@ -85,7 +82,7 @@ Though the battle between Linux and Windows continues in desktop-segment when it
 
 ### 10\. Linux is everywhere
 
-![linux is everywhere][9]![linux is everywhere][9]
+![linux is everywhere][9]!
 
 Yes, Linux is everywhere. From the smallest device to the largest supercomputer, Linux is everywhere.  It can be a car, router, phone, medical devices, plane, TV, satellite, watch or school tablet, Linux will be there.
 
