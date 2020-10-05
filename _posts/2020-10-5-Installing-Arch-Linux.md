@@ -2,8 +2,1210 @@
 Title: Installing Arch Linux
 Subtitle: Advanced Commands Here
 comments: true
-
 ---
 
-**# Installing Arch Linux -- a few notes · Jacob's page** Arch Linux is exceptionally pleasant to use. However, there is no visual installer with a "friendly" GUI interface. So, you do the installation by booting from a "live CD", then running commands at the `bash` command line (or maybe it's `zsh`). And, while the installation instructions at the Arch Wiki are excellent, a few additional notes might be helpful. And, by the way, if a GUI installer is a must-have for you, take a look at Manjaro Linux: . It's a different and separate Linux distribution, but it is based on Arch. If you are looking for an even easier way to install Arch Linux, take a look at EndeavourOS -- . It's Arch Linux with a more friendly installer. From their Web site: > We're offering you an installation with a friendly installer that will set up your system in a headache-free and swiftly manner. >  > After install you're set up with a lightly customized and an almost bare Xfce desktop shipped with Firefox, our in-house update-notifier, an AUR helper called Yay and a welcome greeter that guides you through the first steps, ready to discover the endless possibilities an Arch-based system has. At first glance, EndeavourOS may look intimidating with its terminal commands, but we have the premium advantage of an active and friendly community, our wiki and an online magazine called Discovery to guide you through your journey into Archlinux. One possible downside is that the EndeavourOS `iso` or image is about 1.6 GB and you need to be able to copy that onto a device that you can boot from. Likely you will want to use a USB drive. In contrast, the plain Arch Linux `iso` can be burned on a 700 MB CD. If the USB drive works for you, consider giving EndeavourOS a try. In my case, my old laptop did not support booting from a USB drive. So, I installed plain Arch. And, that's what the rest of this blog article is about. And, that's what the rest of this blog article is about. Here are a few sites/pages you will want to look at for information about and help with Arch Linux: Insert and boot from the live CD. **###** [**[3.1  Connect to the Internet\][1]**](javascript:void()) The easiest way to do this is to use a wired connection. To do so, plug in an Ethernet cable connected to your router. If you need to use a wireless connection, follow the instructions in the "Installation guide". Note that in order to use a wireless connection after you reboot to your new installation, you will need network management software. See below. Verify your connection with something like this:            # ping archlinux.org     **###** [**[3.3  Partitions -- prepare your hark drive\][2]**](javascript:void()) Note that on some machines you will have a static drive. ***\*Warning\****: This operation possibly destroys data. I'm going to assume here that you are going to clear out your hard drive and wipe it clean of any existing contents. If, for example, you have a partition that you want to preserve, then you will do something different. The install guide suggests that you use `fdisk`. That's certainly a good choice, and, for the straight forward layout that we're going to create, is easy enough to use, once you have learned a few commands. The Arch Linux live CD that I used (dated 11/01/2019) also contained `cfdisk`. You might find that a little more friendly and intuitive than `fdisk`, although for my purposes, `fdisk` seemed easy enough to use. If you want a slightly more intuitive program, consider `cfdisk`: > Note that cfdisk provides basic partitioning functionality with a user-friendly interface. If you need advanced features, use fdisk(8) instead. Using `fdisk`, we'll need the following commands: * `m` \-- print this menu -- Display a menu of available commands. * `p` \-- print the partition table -- Display a table of the existing partitions. * `d` \-- delete a partition -- Delete an existing partition. You will be asked for the number of the partition you wish to delete. * `n` \-- add a new partition -- Create a new partition. You will be asked for:    * The partition number -- Accept the default.    * Whether to create a primary or extended partition -- Respond "p": primary.    * The starting position -- Accept the default.    * The ending position/size -- Specify the size in gigabytes, for example: "+200G". * `t` \-- change a partition type -- For the swap partition, change it to "Linux swap". * `l` \-- list known partition types -- Use these numbers with the `t` command, in particular change the type of the swap partition to "Linux swap". * `a` \-- [mark partition as bootable] -- Do this to your first partition. * `w` \-- write table to disk and exit. * `q` \-- quit without saving changes. For the purposes of illustration in this blog article, we'll create the following rather simple partition layout: 1. A root partition `/` \-- 40 GB. 2. A swap partition -- 10 GB. 3. A users partition `/home` \-- the remainder of the disk. Here are the steps you can follow: 1. Determine the device. You can use `df` or `df -h`. Example:            $ df -h    Filesystem                    Size  Used Avail Use% Mounted on    udev                          3.5G     0  3.5G   0% /dev    tmpfs                         723M  1.7M  721M   1% /run    /dev/sda2                      37G   14G   22G  40% /    tmpfs                         3.6G  151M  3.4G   5% /dev/shm    tmpfs                         5.0M  4.0K  5.0M   1% /run/lock    tmpfs                         3.6G     0  3.6G   0% /sys/fs/cgroup    /dev/sda3                     1.9G  6.1M  1.9G   1% /boot/efi    /dev/sda4                     860G   56G  761G   7% /home        o        o        o     2. Start `fdisk`. Example:            $ fdisk /dev/sda     You might need to use `sudo`. Note that we use the device without a partition number, for example `/dev/sda` and *_not_* `/dev/sda1`. 3. Delete all existing partitions. Use the `d` command, several times if necessary. 4. Create the root partition. Use the `n` command. Specify a primary (not extended) partition. Accept the default for the start location. For the end, specify a size, for example "+40GB". 5. Create a swap partition. Specify a primary (not extended) partition. Accept the default for the start location. For the end, specify a size, for example "+8GB". 6. Create a home partition. Specify a primary (not extended) partition. Accept the default for the start location. For the end/size, specify the remainder of available space. 7. Mark the first partition (the root partition) as bootable. Use the "a" command. 8. Change the type of the swap partition to Linux Swap. Use the "t" command. 9. Save your configuration and exit. Use the "w" and "q" commands. Notes on partitions: * Above I recommend that you create a primary partitions rather than an extended partition. There are other layouts that might work for you. However, in what I describe above, we only need three partitions, so primary partitions will work well. There is a limitation on the number of primary partitions, and since that limit is a maximum of four, we're good with three. If you wanted more than four partitions, then you'd make one of your partitions an extended partition and you'd create logical partitions within that extended partition. * Why a separate home partition? Why not create a swap partition and a root partition. A separate home partition is not really necessary. A number of years ago, I wanted to be able to reformat and re-install Linux in the root partition ("/") without losing my home and data partition. If you think that might be a need for you, then create three partitions, as described above, with a separate home partition. Arch Linux, with its rolling releases, makes that need less likely, I suppose, but still ... * A note on partition sizes -- The example sizes that I give above are somewhat arbitrary and likely are excessive. A common recommendation is to have a swap partition whose size is double the size of your machines RAM (memory) up to 8 GB. A quick Web search will turn up recommendations. Here is one: . **###** [**[3.4  Format the partitions\][3]**](javascript:void()) Assuming that you followed the above partition scheme (partition 1: root, partition 2: swap, partition 3: home), do the following, replacing "sdX" with your device:            $ mkfs.ext4 /dev/sdX1    $ mkswap /dev/sdX2    $ swapon /dev/sdX2    $ mkfs.ext4 /dev/sdX3     The above commands format the two data partitions with `ext4` file systems and initializes the swap partition. **###** [**[3.5  Mount the file systems\][4]**](javascript:void()) On my system, I did the following:            $ mount /dev/sda1 /mnt    $ mkdir /mnt/home    $ mount /dev/sda3 /mnt/home     Notes: * Replace "sda" with your device, if necessary. * You want to mount `/home` in addition to `/` so that both these partitions are configured in `/etc/fstab` when you, later, run `genfstab`. See below. **###** [**[3.7  Installation -- install essential packages\][5]**](javascript:void()) Run the following:            $ pacstrap /mnt base linux linux-firmware     In order to create a functioning system, you will want to install additional packages. See the following:  In particular, you may want to consider installing the following: * Networking -- Install `networkmanager` or `netctl`. With `networkmanager` installed, you can use `nmtui` to select and connect to a wireless network. `netctl` is an alternative to `networkmanager`. * A text editor -- `nano` is a simple text mode editor. `vim` is a much more powerful editor. `neovim` is a more modern implementation of `vim`. * If you intend to be compiling and installing packages written in `C`, install package `base-devel`. Notes: * As long as you can connect to the network after you reboot without the live CD, you can install any of the packages you need later. * You can install a package with the following:            $ pacman -S      * You can search for a package if you know part of its name with the following:            $ pacman -Ss     $ pacman -Ss  | less     * If after rebooting, you find that you omitted some needed step. If so, you can reboot from the live CD, remount your file systems, then, for example, install additional needed packages. **###** [**[3.8  Configure the system -- generate fstab\][6]**](javascript:void()) Generate `/etc/fstab`. This will enable the system to automatically mount your file systems when you boot. Run this:            $ genfstab -U /mnt >> /mnt/etc/fstab     View file `/etc/fstab` (e.g. with `nano` or `vim`). Make sure that it has lines for `/` and `/home` and swap. **###** [**[3.9  Chroot\][7]**](javascript:void()) Change root into the new system -- This will enable us to run commands with root privileges:            $ arch-chroot /mnt     **###** [**[3.10  Time zone\][8]**](javascript:void()) Set the time zone -- Make a symbolic link to the time zone file for your region. Use the following, but replace "Region" and "City":            $ ln -sf /usr/share/zoneinfo/Region/City /etc/localtime     For example, I did:            $ ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime     **###** [**[3.11  Generate /etc/adjtime\][9]**](javascript:void()) Run hwclock(8) to generate /etc/adjtime:            $ hwclock --systohc     This command assumes the hardware clock is set to UTC. See System time#Time standard for details. **###** [**[3.12  Localization\][10]**](javascript:void()) Uncomment en_US.UTF-8 UTF-8 and other needed locales in /etc/locale.gen, and generate them with:            $ locale-gen     Create the locale.conf(5) file, and set the LANG variable accordingly. Add the following to /etc/locale.conf:            LANG=en_US.UTF-8     If you set the keyboard layout, make the changes persistent in vconsole.conf(5) -- `/etc/vconsole.conf`:            KEYMAP=de-latin1     **###** [**[3.13  Network configuration\][11]**](javascript:void()) Create the hostname file -- Edit `/etc/hostname`. Insert a line that give the host name for your system:            myhostname     Add matching entries to hosts(5) -- For example, add the following in `/etc/hosts`:            127.0.0.1       localhost    ::1             localhost    127.0.1.1       myhostname.localdomain  myhostname     If the system has a permanent IP address, it should be used instead of `127.0.1.1`. You may want to install some network tools. For example, I installed `networkmanager`:            $ pacman -S networkmanager     **###** [**[3.15  Install a boot loader\][12]**](javascript:void()) Choose and install a boot loader. I installed `grub`:            $ pacman -S grub    $ grub-install --target=i386-pc /dev/sdX     Notes: * For `grub-install`, use "/dev/sdX", not "/dev/sdX1". For example, on my system, I used "/dev/sda". **###** [**[3.16  Reboot\][13]**](javascript:void()) Exit the `chroot` environment -- Type `exit` or use `Ctrl-d`. Remove the live CD from the CD drive. Reboot -- Type `reboot`. **###** [**[4.1  System services\][14]**](javascript:void()) Some capabilities are provided as system services. You will want to enable them, so that they automatically start up during the boot process and you may want to start them immediately. The following does that, for example, for the `networkmanager` service:            $ systemctl enable networkmanager    $ systemctl start networkmanager     **###** [**[4.2  Adding a new user\][15]**](javascript:void()) On my system, I wanted to add myself as a user who could use `sudo` to run commands with root privileges. So, I did the following:            $ useradd -m dkuhlman    $ passwd dkuhlman               # and enter a new password     And, to give add myself to the `sudoers` group and enable myself to use `sudo` to run commands with root privileges, I used `visudo` and added a line for myself by copying the one for `root` and replacing "root" with my user name:            # User privilege specification    ##    root ALL=(ALL) ALL    dkuhlman ALL=(ALL) ALL     **###** [**[4.3  Using pacman\][16]**](javascript:void()) `pacman` is our tool for installing and maintaining packages on Arch Linux. It's our not-so-intuitive package manager. But, if your experience is anything like mine, you will find that using `pacman` becomes very convenient quite quickly. There is a good cheat sheet on `pacman` commands and options here:  Here are a few common tasks that you are likely to want to do: * Get help for `pacman` commands -- Examples:            $ pacman -h    $ pacman -h -S    $ pacman -h -F     * Search for a package:            $ pacman -Ss some_search_string     * Install a package:            $ sudo pacman -S package_name     * Upgrade installed packages -- Use this command to update the package database on you system and then upgrade the packages installed on your system so that they are the latest versions:            $ sudo pacman -Syu     * Search *_installed_* packages for the packages that contain a file:            $ pacman -F some_file_name     * List the files installed by a package:            $ pacman -Fl package_name     **###** [**[4.4  Installing desktop window managers and video drivers\][17]**](javascript:void()) I installed Arch Linux on a rather old laptop. I had a bit of trouble figuring out which video drivers I needed to install in order to support `Xorg` (package `xserv-org`). Here is what I did. Install support for `Xorg` \-- I wanted to be able to use both the `Xfce4` desktop and the `i3` window manager. So, using `pacman`, I installed the following packages: Installing needed video drivers -- There is good information and help here: . The above page tells you both (1) how to detect which drivers you need and (2) what packages are available containing the supporting drivers. Basically, I installed driver packages until I was able to bring up the `Xfce4` and `i3` desktops. I likely installed some drivers that I did not need. But, that's OK. Now, it works. **###** [**[4.5  Support for audio/sound\][18]**](javascript:void()) Consider installing packages for `Alsa` and `PulseAudio`. On my system, sound was initially muted. I fixed this by starting up `alsamixer`, and then unmuting "Master". **###** [**[4.6  LAN (network) setup\][19]**](javascript:void()) I have multiple machines connected to my LAN (local area network). I wanted those other machines to be able to address my Arch Linux machine by host name. To support that, I installed the `avahi` support packages. Actually, I believe that I have `avahi` installed on all my Linux machines. [1]: [http://davekuhlman.org#id4](http://davekuhlman.org/#id4) [2]: [http://davekuhlman.org#id6](http://davekuhlman.org/#id6) [3]: [http://davekuhlman.org#id7](http://davekuhlman.org/#id7) [4]: [http://davekuhlman.org#id8](http://davekuhlman.org/#id8) [5]: [http://davekuhlman.org#id10](http://davekuhlman.org/#id10) [6]: [http://davekuhlman.org#id11](http://davekuhlman.org/#id11) [7]: [http://davekuhlman.org#id12](http://davekuhlman.org/#id12) [8]: [http://davekuhlman.org#id13](http://davekuhlman.org/#id13) [9]: [http://davekuhlman.org#id14](http://davekuhlman.org/#id14) [10]: [http://davekuhlman.org#id15](http://davekuhlman.org/#id15) [11]: [http://davekuhlman.org#id16](http://davekuhlman.org/#id16) [12]: [http://davekuhlman.org#id18](http://davekuhlman.org/#id18) [13]: [http://davekuhlman.org#id19](http://davekuhlman.org/#id19) [14]: [http://davekuhlman.org#id21](http://davekuhlman.org/#id21) [15]: [http://davekuhlman.org#id22](http://davekuhlman.org/#id22) [16]: [http://davekuhlman.org#id23](http://davekuhlman.org/#id23) [17]: [http://davekuhlman.org#id24](http://davekuhlman.org/#id24) [18]: [http://davekuhlman.org#id25](http://davekuhlman.org/#id25) [19]: [http://davekuhlman.org#id26](http://davekuhlman.org/#id26) 
 
+# Installing Arch Linux
+
+After witnessing insane minimalism paired with a tiler (tiling window manager), knew it was my time to take the pilgrimage to Arch Linux. Some characteristics that make Arch unique:
+
+* [The Arch Way][1] embody the principles behind Arch Linux; simplicity, modernity, pragmatism, user centrality and versatility.
+* Forces one to build the system up by hand.
+* This encourages you to question the role of each component of the system, and available options to satisfy that component (e.g. the terminal emulator).
+* The result is a highly tailored and minimal system that meets precisely your needs.
+* Practical and pragmatic documentation. The [Arch Wiki][2] is the gold standard when it comes to documentation.
+* The Arch User Repository (AUR) is a treasure chest of pre-packaged useful recent software. Somehow every program I've ever needed has been available on AUR.
+* Rolling upgrades.
+
+Arch was born in 2001, when Canadian programmer Judd Vinet, inspired by the elegance of systems such as Slackware and the BSD's, set out to build his own distro based on a similar ethos. The first formal release, 0.1, dropped on March 11, 2002.
+
+## Boot disk
+
+To bootstrap the install process, a boot key is the way to go. Obtain the latest `iso` image, and block write it to a USB drive using `dd`. `dd` (aka disk destroyer to some) trusts you know what you're doing and can destroy data very easily if not used correctly.
+
+Use `lsblk` to determine the mapped device name (e.g. `/dev/sdb`). When ready, pull the trigger and flash the drive with arch:
+    
+    
+    dd if=Downloads/archlinux-2019.03.01-x86_64.iso of=/dev/sdb status="progress"
+    
+
+Boot the target system on the new boot drive. If all goes well, you will end up on a bash shell, in the temporary boot preparation system provided by Arch.
+
+## Post boot
+
+Get network connectivity:
+    
+    
+    wifi-menu
+    ip a
+    
+
+Enable NTP:
+    
+    
+    timedatectl set-ntp true
+    
+
+## Partitioning
+
+UEFI (supports newer 64-bit based GPT) or BIOS (based on traditional MBR). If the below sys node doesn't exist, go BIOS:
+    
+    
+    ls /sys/firmware/efi/efivars
+    
+
+Determine the target block device (e.g. an SSD) for installation, using `lsblk`.
+
+Assuming a BIOS compatible system, will go with `fdisk` (not `gdisk`) for the partitioning setup:
+    
+    
+    fdisk /dev/sda
+    
+
+`fdisk` shortcuts:
+
+* `m` help
+* `p` print partition table
+* `d` delete
+* `n` new
+
+In a nutshell, blow away any existing partitions (`d`), and create 4 new (`n`) primary partitions. Note when specifying the _last sector_ can size with `+200M` style syntax, `+200M` is 200MiB, `+50G` is 50GiB. I cut my ~500GB drive up into the following 4 partiions:
+
+* 200M for _boot_ partition (grub etc)
+* 24G for _swap_ (rule of thumb is 150% of total system memory)
+* 100G for _root_ partition
+* ~340G+ for _home_ partition (leave last sector unspecified in fdisk to use all remaining space)
+
+We are aiming for a partition layout similar to this:
+    
+    
+    $ lsblk
+    NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+    sda      8:0    0 465.8G  0 disk
+    ├─sda1   8:1    0   200M  0 part /boot
+    ├─sda2   8:2    0    24G  0 part [SWAP]
+    ├─sda3   8:3    0   100G  0 part /
+    └─sda4   8:4    0 341.6G  0 part /home
+    
+
+## Format partitions (file systems)
+
+Apply `ext4` (the fourth extended filesystem) to the boot, root and home partitions (i.e. all but the swap):
+    
+    
+    mkfs.ext4 /dev/sda1
+    mkfs.ext4 /dev/sda3
+    mkfs.ext4 /dev/sda4
+    
+
+Then setup the swap space:
+    
+    
+    mkswap /dev/sda2
+    swapon /dev/sda2
+    
+
+Now its time to mount these new partitions into the Arch bootstrapped system, so they be used.
+
+The four partitions will be mounted into the current Arch boot preparation systems file system tree under `/mnt` so a `chroot` can occur, and then system installation. First mount the root partition, then the _boot_ and _home_ partitions within the _root_ mount under `/mnt/boot` and `/mnt/home` respectively.
+    
+    
+    mount /dev/sda3 /mnt
+    mkdir -p /mnt/boot /mnt/home
+    mount /dev/sda1 /mnt/boot
+    mount /dev/sda4 /mnt/home
+    
+
+## Setup pacman mirrors
+
+Defined in `/etc/pacman.d/mirrorlist`. Higher mirrors in the list taken precedence over lower once, rearrange as desired:
+    
+    
+    ##
+    ## Arch Linux repository mirrorlist
+    ## Filtered by mirror score from mirror status page
+    ## Generated on 2019-04-01
+    ##
+    
+    ## Australia
+    Server = http://mirror.internode.on.net/pub/archlinux/$repo/os/$arch
+    ## Turkey
+    Server = http://mirror.veriteknik.net.tr/archlinux/$repo/os/$arch
+    
+
+## Install Arch with pacstrap
+
+The `pacstrap` script will install the `base`, and if desired other [package groups][3], such as [base-devel][4] for common build related programs.
+    
+    
+    pacstrap /mnt base base-devel
+    
+
+## fstab
+
+So that the mount are automatically applied as part of the system boot process, add them to `/etc/fstab` as UUID's, which are more robust than device names which can change.
+    
+    
+    genfstab -U /mnt >> /mnt/etc/fstab
+    
+
+## chroot
+
+Now to change root into the new system, from the Arch boot preparation system:
+    
+    
+    arch-chroot /mnt
+    
+
+## root password
+
+Set the password for the root account with `passwd`
+
+## Localisation
+
+Uncomment `en_US.UTF-8` and `UTF-8` in `/etc/locale.gen`, and generate:
+    
+    
+    locale-gen
+    
+
+Create `/etc/locale.conf` with:
+    
+    
+    LANG=en_US.UTF-8
+    
+
+## Time zone
+
+Symlink in the appropriate zone definition:
+    
+    
+    ln -sf /usr/share/zoneinfo/Australia/Canberra /etc/localtime
+    
+
+Run `hwclock --systohc` to generate `/etc/adjtime`
+
+## Networking
+
+* Create `/etc/hostname`, and define a name for the host.
+* Edit `/etc/hosts` for loopback based on the defined hostname above, `127.0.1.1 myhostname.localdomain myhostname`
+* Install NetworkManager which provides persistent network configuration across reboots, `pacman -S networkmanager` and enable it `systemctl enable NetworkManager`
+
+## Boot loader (GRUB)
+
+Several boot loaders are [supported][5] but here are going with GRUB.
+    
+    
+    pacman -S grub
+    grub-install --target=i386-pc /dev/sda
+    grub-mkconfig -o /boot/grub/grub.cfg
+    
+
+A minimal base system is installed and configured, and ready to be used.
+
+* Escape chroot with ctrl+d or `exit`.
+* Unmount everything `umount -R /mnt`, `lsblk` should confirm this.
+* `reboot`
+* Remove the USB drive
+
+## Wifi
+
+Unfortunately wifi settings were not persisted. Fix with network manager:
+    
+    
+    nmcli dev wifi connect wifi-sid-goes-here password wifi-password-goes-here
+    
+
+Also make sure to that `wifi-menu` is functional, by installing the `dialog` package. `netctl` is useful for troubleshooting. Ensure that the network profile for the wifi is enabled using `netctl`.
+
+See [archwiki][6]:
+
+* `nmcli device wifi list` sniff currently available wifi ssids in range
+* `nmcli connection show` show active connection/s
+* `nmcli device wifi connect Jeneffer password S3CR3T` connect to ssid
+* `nmcli device wifi connect Jeneffer password S3CR3T hidden yes` connect to hidden ssid
+* `nmcli connection up uuid UUID` reconnect a disconnected interface
+* `nmcli device` list all interfaces and their state
+* `mcli device disconnect wlp3s0` disconnect an interface
+* `nmcli radio wifi off` disable wifi radio
+
+## Add users
+    
+    
+    useradd -m -g wheel ben
+    passwd ben
+    sudo vi /etc/sudoers
+    
+
+Uncomment (line 85) to allow members of the wheel group to sudo with (or without) password prompting:
+    
+    
+    %wheel ALL=(ALL) NOPASSWD: ALL
+    
+
+## GPU drivers
+
+I've got a mix of machines with nvidia and amd accelerators. Just follow the bouncing ball on the appropriate arch wiki:
+
+* [AMDGPU][7] for the open source AMD based driver
+* [NVIDIA][8] the proprietary blob
+
+Once installed verify with some benchmarks, before installing steam. Install `glmark2` from the AUR, then bench.
+    
+    
+    $ glmark2
+    =======================================================
+        glmark2 2014.03
+    =======================================================
+        OpenGL Information
+        GL_VENDOR:     X.Org
+        GL_RENDERER:   AMD Radeon (TM) RX 480 Graphics (POLARIS10, DRM 3.35.0, 5.4.2-arch1-1, LLVM 9.0.0)
+        GL_VERSION:    4.5 (Compatibility Profile) Mesa 19.2.7
+    =======================================================
+    [build] use-vbo=false: FPS: 9521 FrameTime: 0.105 ms
+    [build] use-vbo=true: FPS: 14981 FrameTime: 0.067 ms
+    [texture] texture-filter=nearest: FPS: 15094 FrameTime: 0.066 ms
+    [texture] texture-filter=linear: FPS: 15087 FrameTime: 0.066 ms
+    [texture] texture-filter=mipmap: FPS: 14676 FrameTime: 0.068 ms
+    [shading] shading=gouraud: FPS: 14161 FrameTime: 0.071 ms
+    [shading] shading=blinn-phong-inf: FPS: 14188 FrameTime: 0.070 ms
+    [shading] shading=phong: FPS: 14027 FrameTime: 0.071 ms
+    [shading] shading=cel: FPS: 14157 FrameTime: 0.071 ms
+    [bump] bump-render=high-poly: FPS: 11664 FrameTime: 0.086 ms
+    [bump] bump-render=normals: FPS: 15074 FrameTime: 0.066 ms
+    [bump] bump-render=height: FPS: 14998 FrameTime: 0.067 ms
+    libpng warning: iCCP: known incorrect sRGB profile
+    [effect2d] kernel=0,1,0;1,-4,1;0,1,0;: FPS: 16919 FrameTime: 0.059 ms
+    libpng warning: iCCP: known incorrect sRGB profile
+    [effect2d] kernel=1,1,1,1,1;1,1,1,1,1;1,1,1,1,1;: FPS: 16612 FrameTime: 0.060 ms
+    [pulsar] light=false:quads=5:texture=false: FPS: 15541 FrameTime: 0.064 ms
+    libpng warning: iCCP: known incorrect sRGB profile
+    [desktop] blur-radius=5:effect=blur:passes=1:separable=true:windows=4: FPS: 8164 FrameTime: 0.122 ms
+    libpng warning: iCCP: known incorrect sRGB profile
+    [desktop] effect=shadow:windows=4: FPS: 8348 FrameTime: 0.120 ms
+    [buffer] columns=200:interleave=false:update-dispersion=0.9:update-fraction=0.5:update-method=map: FPS: 1189 FrameTime: 0.841 ms
+    [buffer] columns=200:interleave=false:update-dispersion=0.9:update-fraction=0.5:update-method=subdata: FPS: 1467 FrameTime: 0.682 ms
+    [buffer] columns=200:interleave=true:update-dispersion=0.9:update-fraction=0.5:update-method=map: FPS: 1221 FrameTime: 0.819 ms
+    [ideas] speed=duration: FPS: 5648 FrameTime: 0.177 ms
+    [jellyfish] : FPS: 13110 FrameTime: 0.076 ms
+    [terrain] : FPS: 1939 FrameTime: 0.516 ms
+    [shadow] : FPS: 12114 FrameTime: 0.083 ms
+    [refract] : FPS: 3845 FrameTime: 0.260 ms
+    [conditionals] fragment-steps=0:vertex-steps=0: FPS: 14620 FrameTime: 0.068 ms
+    [conditionals] fragment-steps=5:vertex-steps=0: FPS: 15881 FrameTime: 0.063 ms
+    [conditionals] fragment-steps=0:vertex-steps=5: FPS: 16657 FrameTime: 0.060 ms
+    [function] fragment-complexity=low:fragment-steps=5: FPS: 17256 FrameTime: 0.058 ms
+    [function] fragment-complexity=medium:fragment-steps=5: FPS: 17571 FrameTime: 0.057 ms
+    [loop] fragment-loop=false:fragment-steps=5:vertex-steps=5: FPS: 17570 FrameTime: 0.057 ms
+    [loop] fragment-steps=5:fragment-uniform=false:vertex-steps=5: FPS: 17540 FrameTime: 0.057 ms
+    [loop] fragment-steps=5:fragment-uniform=true:vertex-steps=5: FPS: 17667 FrameTime: 0.057 ms
+    =======================================================
+                                      glmark2 Score: 12379
+    =======================================================
+    
+
+If the GPU driver is functional, can pull metrics about your device from the kernel:
+    
+    
+    $ sudo cat /sys/kernel/debug/dri/0/amdgpu_pm_info
+    Clock Gating Flags Mask: 0x3fbcf
+            Graphics Medium Grain Clock Gating: On
+            Graphics Medium Grain memory Light Sleep: On
+            Graphics Coarse Grain Clock Gating: On
+            Graphics Coarse Grain memory Light Sleep: On
+            Graphics Coarse Grain Tree Shader Clock Gating: Off
+            Graphics Coarse Grain Tree Shader Light Sleep: Off
+            Graphics Command Processor Light Sleep: On
+            Graphics Run List Controller Light Sleep: On
+            Graphics 3D Coarse Grain Clock Gating: Off
+            Graphics 3D Coarse Grain memory Light Sleep: Off
+            Memory Controller Light Sleep: On
+            Memory Controller Medium Grain Clock Gating: On
+            System Direct Memory Access Light Sleep: Off
+            System Direct Memory Access Medium Grain Clock Gating: On
+            Bus Interface Medium Grain Clock Gating: Off
+            Bus Interface Light Sleep: On
+            Unified Video Decoder Medium Grain Clock Gating: On
+            Video Compression Engine Medium Grain Clock Gating: On
+            Host Data Path Light Sleep: On
+            Host Data Path Medium Grain Clock Gating: On
+            Digital Right Management Medium Grain Clock Gating: Off
+            Digital Right Management Light Sleep: Off
+            Rom Medium Grain Clock Gating: On
+            Data Fabric Medium Grain Clock Gating: Off
+            Address Translation Hub Medium Grain Clock Gating: Off
+            Address Translation Hub Light Sleep: Off
+    
+    GFX Clocks and Power:
+            300 MHz (MCLK)
+            300 MHz (SCLK)
+            300 MHz (PSTATE_SCLK)
+            300 MHz (PSTATE_MCLK)
+            800 mV (VDDGFX)
+            7.162 W (average GPU)
+    
+    GPU Temperature: 31 C
+    GPU Load: 25 %
+    MEM Load: 7 %
+    
+    UVD: Disabled
+    
+    VCE: Disabled
+    
+
+## Essential applications (user space)
+
+If you've gone down the window manager (i.e. tiler) route, there is literally nothing, its a minimalist wasteland. Here's the progs I use to support my specific computer based workflows (as a software dev and terminal fan).
+
+My 2c, make sure to consider [suckless][9] programs.
+
+* AUR helper: `yay` (install this first)
+* Audio: `alsamixer`, `alsa-utils`, `pulseaudio`, `pulseaudio-alsa`, `pulsemixer`
+* Bluetooth: `bluez`, `bluez-utils`, `pulseaudio-bluetooth`
+* Database: `postgres`
+* Dev: `gcc`, `python`, `golang`, `java`
+* Documenation: `pandoc`, `texlive-core`, `texlive-bin`, `texlive-latexextra`, `texlive-publishers`, `texlive-fontsexta`, `troff`, `pdflatex`
+* DVD/CD burning: `dvd+rw-tools`, `cdrtools`, `lame`
+* Games: `steam` (enable multilib pacman repo), `nethack`
+* Fonts: `nerd-fonts-fira-code`, `ttf-fira-code`, `ttf-font-awesome`, `ttf-ms-fonts`, `ttf-linux-libertine`, `ttf-dejavu`, `ttf-inconsolata`, `ttf-ubuntu-font-family` (steer clear of noto fonts due to glyph bug with Xft which crashes `st`)
+* Font management: `xorg-xfontsel` (GUI for specifying a font in XLFD), `xorg-xfontsel` (list fonts by name in X logical font description aka XLFD format)
+* File manager: `nnn`
+* Hypervisor (VM's): `vbox`
+* Image viewer: `sxiv`
+* IRC client: `irssi`
+* Mail: `neomutt`, `isync`, `msmtp`, `lynx`
+* Music player: `mpd`, `mpc`, `ncmpcpp`
+* Networking: `networkmanager`, `wifi-menu`, `dialog`
+* Notifications: `dunst`, `dzen2`
+* PDF viewer: `mupdf`
+* Screenshots: `maim`, `xclip`
+* Shells: `dash`, `zsh`
+* System monitor: `conky` (handy for piping into `dzen2`) as per my `~/bin/popinfo2` script
+* Terminal emulator: `st`
+* Text editor: `neovim`, `python-pynvim`
+* Video player: `vlc`
+* VPN: `openvpn`
+* Window manager: `dwm`
+
+## Desktop Environment (DE) vs Window Manager (WM)
+
+In a nutshell a DE (like gnome or kde) is heavy weight includes everything bar the kitchen sink, such as music players, document editors, file managers, status bars, network managers, start menus, etc. They are incredibly bloated, but aimed at novice users that just want their computer "to work". A WM (like dwm or i3) on the other hand is incredibly lean, I mean you don't even get a status bar, but are very customisable and do just what you want and no more. Because of this WM's tend to be allot snappier. I personally prefer using a WM, and more specifically a tiling WM (aka a _tiler_) and highly recommend [dwm][10]:
+
+> Because dwm is customized through editing its source code [C], it's pointless to make binary packages of it. This keeps its userbase small and elitist. No novices asking stupid questions.
+
+I have started to form some of my own opinions around the use of a tiler:
+
+* Gaps between windows are literally a waste of space. Don't do this.
+* Don't bother with lots of the cosmetic ricing hacks out there, its all bloat.
+* Toolbars (such as `polybar`) display redundant information at the cost of cognitive overload and wasted screen real-estate. If I want to know the time I look at my watch.
+
+### dwm
+
+I've have recently discovered [suckless][9], and their [philosophy][11] towards software really resonates strongly with me.
+
+> We are the home of quality software such as dwm, dmenu, st and plenty of other tools, with a focus on simplicity, clarity and frugality. Our philosophy is about keeping things simple, minimal and usable.
+[Source](https://www.bencode.net/posts/2019-04-19-arch/ "Permalink to Ben Simmonds — Yet another blog about code and computers.")
+
+# Ben Simmonds — Yet another blog about code and computers.
+
+After witnessing insane minimalism paired with a tiler (tiling window manager), knew it was my time to take the pilgrimage to Arch Linux. Some characteristics that make Arch unique:
+
+* [The Arch Way][1] embody the principles behind Arch Linux; simplicity, modernity, pragmatism, user centrality and versatility.
+* Forces one to build the system up by hand.
+* This encourages you to question the role of each component of the system, and available options to satisfy that component (e.g. the terminal emulator).
+* The result is a highly tailored and minimal system that meets precisely your needs.
+* Practical and pragmatic documentation. The [Arch Wiki][2] is the gold standard when it comes to documentation.
+* The Arch User Repository (AUR) is a treasure chest of pre-packaged useful recent software. Somehow every program I've ever needed has been available on AUR.
+* Rolling upgrades.
+
+Arch was born in 2001, when Canadian programmer Judd Vinet, inspired by the elegance of systems such as Slackware and the BSD's, set out to build his own distro based on a similar ethos. The first formal release, 0.1, dropped on March 11, 2002.
+
+## Boot disk
+
+To bootstrap the install process, a boot key is the way to go. Obtain the latest `iso` image, and block write it to a USB drive using `dd`. `dd` (aka disk destroyer to some) trusts you know what you're doing and can destroy data very easily if not used correctly.
+
+Use `lsblk` to determine the mapped device name (e.g. `/dev/sdb`). When ready, pull the trigger and flash the drive with arch:
+    
+    
+    dd if=Downloads/archlinux-2019.03.01-x86_64.iso of=/dev/sdb status="progress"
+    
+
+Boot the target system on the new boot drive. If all goes well, you will end up on a bash shell, in the temporary boot preparation system provided by Arch.
+
+## Post boot
+
+Get network connectivity:
+    
+    
+    wifi-menu
+    ip a
+    
+
+Enable NTP:
+    
+    
+    timedatectl set-ntp true
+    
+
+## Partitioning
+
+UEFI (supports newer 64-bit based GPT) or BIOS (based on traditional MBR). If the below sys node doesn't exist, go BIOS:
+    
+    
+    ls /sys/firmware/efi/efivars
+    
+
+Determine the target block device (e.g. an SSD) for installation, using `lsblk`.
+
+Assuming a BIOS compatible system, will go with `fdisk` (not `gdisk`) for the partitioning setup:
+    
+    
+    fdisk /dev/sda
+    
+
+`fdisk` shortcuts:
+
+* `m` help
+* `p` print partition table
+* `d` delete
+* `n` new
+
+In a nutshell, blow away any existing partitions (`d`), and create 4 new (`n`) primary partitions. Note when specifying the _last sector_ can size with `+200M` style syntax, `+200M` is 200MiB, `+50G` is 50GiB. I cut my ~500GB drive up into the following 4 partiions:
+
+* 200M for _boot_ partition (grub etc)
+* 24G for _swap_ (rule of thumb is 150% of total system memory)
+* 100G for _root_ partition
+* ~340G+ for _home_ partition (leave last sector unspecified in fdisk to use all remaining space)
+
+We are aiming for a partition layout similar to this:
+    
+    
+    $ lsblk
+    NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+    sda      8:0    0 465.8G  0 disk
+    ├─sda1   8:1    0   200M  0 part /boot
+    ├─sda2   8:2    0    24G  0 part [SWAP]
+    ├─sda3   8:3    0   100G  0 part /
+    └─sda4   8:4    0 341.6G  0 part /home
+    
+
+## Format partitions (file systems)
+
+Apply `ext4` (the fourth extended filesystem) to the boot, root and home partitions (i.e. all but the swap):
+    
+    
+    mkfs.ext4 /dev/sda1
+    mkfs.ext4 /dev/sda3
+    mkfs.ext4 /dev/sda4
+    
+
+Then setup the swap space:
+    
+    
+    mkswap /dev/sda2
+    swapon /dev/sda2
+    
+
+Now its time to mount these new partitions into the Arch bootstrapped system, so they be used.
+
+The four partitions will be mounted into the current Arch boot preparation systems file system tree under `/mnt` so a `chroot` can occur, and then system installation. First mount the root partition, then the _boot_ and _home_ partitions within the _root_ mount under `/mnt/boot` and `/mnt/home` respectively.
+    
+    
+    mount /dev/sda3 /mnt
+    mkdir -p /mnt/boot /mnt/home
+    mount /dev/sda1 /mnt/boot
+    mount /dev/sda4 /mnt/home
+    
+
+## Setup pacman mirrors
+
+Defined in `/etc/pacman.d/mirrorlist`. Higher mirrors in the list taken precedence over lower once, rearrange as desired:
+    
+    
+    ##
+    ## Arch Linux repository mirrorlist
+    ## Filtered by mirror score from mirror status page
+    ## Generated on 2019-04-01
+    ##
+    
+    ## Australia
+    Server = http://mirror.internode.on.net/pub/archlinux/$repo/os/$arch
+    ## Turkey
+    Server = http://mirror.veriteknik.net.tr/archlinux/$repo/os/$arch
+    
+
+## Install Arch with pacstrap
+
+The `pacstrap` script will install the `base`, and if desired other [package groups][3], such as [base-devel][4] for common build related programs.
+    
+    
+    pacstrap /mnt base base-devel
+    
+
+## fstab
+
+So that the mount are automatically applied as part of the system boot process, add them to `/etc/fstab` as UUID's, which are more robust than device names which can change.
+    
+    
+    genfstab -U /mnt >> /mnt/etc/fstab
+    
+
+## chroot
+
+Now to change root into the new system, from the Arch boot preparation system:
+    
+    
+    arch-chroot /mnt
+    
+
+## root password
+
+Set the password for the root account with `passwd`
+
+## Localisation
+
+Uncomment `en_US.UTF-8` and `UTF-8` in `/etc/locale.gen`, and generate:
+    
+    
+    locale-gen
+    
+
+Create `/etc/locale.conf` with:
+    
+    
+    LANG=en_US.UTF-8
+    
+
+## Time zone
+
+Symlink in the appropriate zone definition:
+    
+    
+    ln -sf /usr/share/zoneinfo/Australia/Canberra /etc/localtime
+    
+
+Run `hwclock --systohc` to generate `/etc/adjtime`
+
+## Networking
+
+* Create `/etc/hostname`, and define a name for the host.
+* Edit `/etc/hosts` for loopback based on the defined hostname above, `127.0.1.1 myhostname.localdomain myhostname`
+* Install NetworkManager which provides persistent network configuration across reboots, `pacman -S networkmanager` and enable it `systemctl enable NetworkManager`
+
+## Boot loader (GRUB)
+
+Several boot loaders are [supported][5] but here are going with GRUB.
+    
+    
+    pacman -S grub
+    grub-install --target=i386-pc /dev/sda
+    grub-mkconfig -o /boot/grub/grub.cfg
+    
+
+A minimal base system is installed and configured, and ready to be used.
+
+* Escape chroot with ctrl+d or `exit`.
+* Unmount everything `umount -R /mnt`, `lsblk` should confirm this.
+* `reboot`
+* Remove the USB drive
+
+## Wifi
+
+Unfortunately wifi settings were not persisted. Fix with network manager:
+    
+    
+    nmcli dev wifi connect wifi-sid-goes-here password wifi-password-goes-here
+    
+
+Also make sure to that `wifi-menu` is functional, by installing the `dialog` package. `netctl` is useful for troubleshooting. Ensure that the network profile for the wifi is enabled using `netctl`.
+
+See [archwiki][6]:
+
+* `nmcli device wifi list` sniff currently available wifi ssids in range
+* `nmcli connection show` show active connection/s
+* `nmcli device wifi connect Jeneffer password S3CR3T` connect to ssid
+* `nmcli device wifi connect Jeneffer password S3CR3T hidden yes` connect to hidden ssid
+* `nmcli connection up uuid UUID` reconnect a disconnected interface
+* `nmcli device` list all interfaces and their state
+* `mcli device disconnect wlp3s0` disconnect an interface
+* `nmcli radio wifi off` disable wifi radio
+
+## Add users
+    
+    
+    useradd -m -g wheel ben
+    passwd ben
+    sudo vi /etc/sudoers
+    
+
+Uncomment (line 85) to allow members of the wheel group to sudo with (or without) password prompting:
+    
+    
+    %wheel ALL=(ALL) NOPASSWD: ALL
+    
+
+## GPU drivers
+
+I've got a mix of machines with nvidia and amd accelerators. Just follow the bouncing ball on the appropriate arch wiki:
+
+* [AMDGPU][7] for the open source AMD based driver
+* [NVIDIA][8] the proprietary blob
+
+Once installed verify with some benchmarks, before installing steam. Install `glmark2` from the AUR, then bench.
+    
+    
+    $ glmark2
+    =======================================================
+        glmark2 2014.03
+    =======================================================
+        OpenGL Information
+        GL_VENDOR:     X.Org
+        GL_RENDERER:   AMD Radeon (TM) RX 480 Graphics (POLARIS10, DRM 3.35.0, 5.4.2-arch1-1, LLVM 9.0.0)
+        GL_VERSION:    4.5 (Compatibility Profile) Mesa 19.2.7
+    =======================================================
+    [build] use-vbo=false: FPS: 9521 FrameTime: 0.105 ms
+    [build] use-vbo=true: FPS: 14981 FrameTime: 0.067 ms
+    [texture] texture-filter=nearest: FPS: 15094 FrameTime: 0.066 ms
+    [texture] texture-filter=linear: FPS: 15087 FrameTime: 0.066 ms
+    [texture] texture-filter=mipmap: FPS: 14676 FrameTime: 0.068 ms
+    [shading] shading=gouraud: FPS: 14161 FrameTime: 0.071 ms
+    [shading] shading=blinn-phong-inf: FPS: 14188 FrameTime: 0.070 ms
+    [shading] shading=phong: FPS: 14027 FrameTime: 0.071 ms
+    [shading] shading=cel: FPS: 14157 FrameTime: 0.071 ms
+    [bump] bump-render=high-poly: FPS: 11664 FrameTime: 0.086 ms
+    [bump] bump-render=normals: FPS: 15074 FrameTime: 0.066 ms
+    [bump] bump-render=height: FPS: 14998 FrameTime: 0.067 ms
+    libpng warning: iCCP: known incorrect sRGB profile
+    [effect2d] kernel=0,1,0;1,-4,1;0,1,0;: FPS: 16919 FrameTime: 0.059 ms
+    libpng warning: iCCP: known incorrect sRGB profile
+    [effect2d] kernel=1,1,1,1,1;1,1,1,1,1;1,1,1,1,1;: FPS: 16612 FrameTime: 0.060 ms
+    [pulsar] light=false:quads=5:texture=false: FPS: 15541 FrameTime: 0.064 ms
+    libpng warning: iCCP: known incorrect sRGB profile
+    [desktop] blur-radius=5:effect=blur:passes=1:separable=true:windows=4: FPS: 8164 FrameTime: 0.122 ms
+    libpng warning: iCCP: known incorrect sRGB profile
+    [desktop] effect=shadow:windows=4: FPS: 8348 FrameTime: 0.120 ms
+    [buffer] columns=200:interleave=false:update-dispersion=0.9:update-fraction=0.5:update-method=map: FPS: 1189 FrameTime: 0.841 ms
+    [buffer] columns=200:interleave=false:update-dispersion=0.9:update-fraction=0.5:update-method=subdata: FPS: 1467 FrameTime: 0.682 ms
+    [buffer] columns=200:interleave=true:update-dispersion=0.9:update-fraction=0.5:update-method=map: FPS: 1221 FrameTime: 0.819 ms
+    [ideas] speed=duration: FPS: 5648 FrameTime: 0.177 ms
+    [jellyfish] : FPS: 13110 FrameTime: 0.076 ms
+    [terrain] : FPS: 1939 FrameTime: 0.516 ms
+    [shadow] : FPS: 12114 FrameTime: 0.083 ms
+    [refract] : FPS: 3845 FrameTime: 0.260 ms
+    [conditionals] fragment-steps=0:vertex-steps=0: FPS: 14620 FrameTime: 0.068 ms
+    [conditionals] fragment-steps=5:vertex-steps=0: FPS: 15881 FrameTime: 0.063 ms
+    [conditionals] fragment-steps=0:vertex-steps=5: FPS: 16657 FrameTime: 0.060 ms
+    [function] fragment-complexity=low:fragment-steps=5: FPS: 17256 FrameTime: 0.058 ms
+    [function] fragment-complexity=medium:fragment-steps=5: FPS: 17571 FrameTime: 0.057 ms
+    [loop] fragment-loop=false:fragment-steps=5:vertex-steps=5: FPS: 17570 FrameTime: 0.057 ms
+    [loop] fragment-steps=5:fragment-uniform=false:vertex-steps=5: FPS: 17540 FrameTime: 0.057 ms
+    [loop] fragment-steps=5:fragment-uniform=true:vertex-steps=5: FPS: 17667 FrameTime: 0.057 ms
+    =======================================================
+                                      glmark2 Score: 12379
+    =======================================================
+    
+
+If the GPU driver is functional, can pull metrics about your device from the kernel:
+    
+    
+    $ sudo cat /sys/kernel/debug/dri/0/amdgpu_pm_info
+    Clock Gating Flags Mask: 0x3fbcf
+            Graphics Medium Grain Clock Gating: On
+            Graphics Medium Grain memory Light Sleep: On
+            Graphics Coarse Grain Clock Gating: On
+            Graphics Coarse Grain memory Light Sleep: On
+            Graphics Coarse Grain Tree Shader Clock Gating: Off
+            Graphics Coarse Grain Tree Shader Light Sleep: Off
+            Graphics Command Processor Light Sleep: On
+            Graphics Run List Controller Light Sleep: On
+            Graphics 3D Coarse Grain Clock Gating: Off
+            Graphics 3D Coarse Grain memory Light Sleep: Off
+            Memory Controller Light Sleep: On
+            Memory Controller Medium Grain Clock Gating: On
+            System Direct Memory Access Light Sleep: Off
+            System Direct Memory Access Medium Grain Clock Gating: On
+            Bus Interface Medium Grain Clock Gating: Off
+            Bus Interface Light Sleep: On
+            Unified Video Decoder Medium Grain Clock Gating: On
+            Video Compression Engine Medium Grain Clock Gating: On
+            Host Data Path Light Sleep: On
+            Host Data Path Medium Grain Clock Gating: On
+            Digital Right Management Medium Grain Clock Gating: Off
+            Digital Right Management Light Sleep: Off
+            Rom Medium Grain Clock Gating: On
+            Data Fabric Medium Grain Clock Gating: Off
+            Address Translation Hub Medium Grain Clock Gating: Off
+            Address Translation Hub Light Sleep: Off
+    
+    GFX Clocks and Power:
+            300 MHz (MCLK)
+            300 MHz (SCLK)
+            300 MHz (PSTATE_SCLK)
+            300 MHz (PSTATE_MCLK)
+            800 mV (VDDGFX)
+            7.162 W (average GPU)
+    
+    GPU Temperature: 31 C
+    GPU Load: 25 %
+    MEM Load: 7 %
+    
+    UVD: Disabled
+    
+    VCE: Disabled
+    
+
+## Essential applications (user space)
+
+If you've gone down the window manager (i.e. tiler) route, there is literally nothing, its a minimalist wasteland. Here's the progs I use to support my specific computer based workflows (as a software dev and terminal fan).
+
+My 2c, make sure to consider [suckless][9] programs.
+
+* AUR helper: `yay` (install this first)
+* Audio: `alsamixer`, `alsa-utils`, `pulseaudio`, `pulseaudio-alsa`, `pulsemixer`
+* Bluetooth: `bluez`, `bluez-utils`, `pulseaudio-bluetooth`
+* Database: `postgres`
+* Dev: `gcc`, `python`, `golang`, `java`
+* Documenation: `pandoc`, `texlive-core`, `texlive-bin`, `texlive-latexextra`, `texlive-publishers`, `texlive-fontsexta`, `troff`, `pdflatex`
+* DVD/CD burning: `dvd+rw-tools`, `cdrtools`, `lame`
+* Games: `steam` (enable multilib pacman repo), `nethack`
+* Fonts: `nerd-fonts-fira-code`, `ttf-fira-code`, `ttf-font-awesome`, `ttf-ms-fonts`, `ttf-linux-libertine`, `ttf-dejavu`, `ttf-inconsolata`, `ttf-ubuntu-font-family` (steer clear of noto fonts due to glyph bug with Xft which crashes `st`)
+* Font management: `xorg-xfontsel` (GUI for specifying a font in XLFD), `xorg-xfontsel` (list fonts by name in X logical font description aka XLFD format)
+* File manager: `nnn`
+* Hypervisor (VM's): `vbox`
+* Image viewer: `sxiv`
+* IRC client: `irssi`
+* Mail: `neomutt`, `isync`, `msmtp`, `lynx`
+* Music player: `mpd`, `mpc`, `ncmpcpp`
+* Networking: `networkmanager`, `wifi-menu`, `dialog`
+* Notifications: `dunst`, `dzen2`
+* PDF viewer: `mupdf`
+* Screenshots: `maim`, `xclip`
+* Shells: `dash`, `zsh`
+* System monitor: `conky` (handy for piping into `dzen2`) as per my `~/bin/popinfo2` script
+* Terminal emulator: `st`
+* Text editor: `neovim`, `python-pynvim`
+* Video player: `vlc`
+* VPN: `openvpn`
+* Window manager: `dwm`
+
+## Desktop Environment (DE) vs Window Manager (WM)
+
+In a nutshell a DE (like gnome or kde) is heavy weight includes everything bar the kitchen sink, such as music players, document editors, file managers, status bars, network managers, start menus, etc. They are incredibly bloated, but aimed at novice users that just want their computer "to work". A WM (like dwm or i3) on the other hand is incredibly lean, I mean you don't even get a status bar, but are very customisable and do just what you want and no more. Because of this WM's tend to be allot snappier. I personally prefer using a WM, and more specifically a tiling WM (aka a _tiler_) and highly recommend [dwm][10]:
+
+> Because dwm is customized through editing its source code [C], it's pointless to make binary packages of it. This keeps its userbase small and elitist. No novices asking stupid questions.
+
+I have started to form some of my own opinions around the use of a tiler:
+
+* Gaps between windows are literally a waste of space. Don't do this.
+* Don't bother with lots of the cosmetic ricing hacks out there, its all bloat.
+* Toolbars (such as `polybar`) display redundant information at the cost of cognitive overload and wasted screen real-estate. If I want to know the time I look at my watch.
+
+### dwm
+
+I've have recently discovered [suckless][9], and their [philosophy][11] towards software really resonates strongly with me.
+
+> We are the home of quality software such as dwm, dmenu, st and plenty of other tools, with a focus on simplicity, clarity and frugality. Our philosophy is about keeping things simple, minimal and usable.
+
+`dwm` is their minimal tiling window manager.
+
+> Because dwm is customized through editing its source code, it's pointless to make binary packages of it. This keeps its userbase small and elitist. No novices asking stupid questions.
+
+The configuration of dwm is done by creating a custom `config.h`, by editing the `config.def.h` header, and (re)compiling the source code using the provided makefile.
+    
+    
+    pacman -Sy xorg-server xorg-xinit
+    pacman -Sy xf86-video-amdgpu
+    pacman -Sy dmenu git
+    
+
+Clone the `dwm` Git repo, and my patches:
+    
+    
+    git clone https://git.suckless.org/dwm
+    git clone https://github.com/bm4cs/dots.git
+    cd ~/dotfiles && ./install.sh
+    
+
+Apply [patches][12] for specific features wanted. The only patch I apply is [center][13]:
+
+> Add an iscentered rule to automatically center clients on the current monitor.
+
+This lets you define rules in `config.def.h` for certain programs (e.g. pulsemixer) that you'd like to launch center screen, by adding an `iscentered` rule to automatically center clients on the current monitor:
+    
+    
+    static const Rule rules[] = {
+        /* xprop(1):
+         *	WM_CLASS(STRING) = instance, class
+         *	WM_NAME(STRING) = title
+         */
+        /* class      instance       title       tags mask     iscentered     isfloating   monitor */
+        { "Gimp",     NULL,          NULL,       0,            0,             1,           -1 },
+    
+
+To you can see the `WM_CLASS` and `WM_NAME` properties of the X window are used by the rule chain to figure out what rules to apply. To determine these values, use `xprop` which will give you a mouse cursor to select the window of the running program you are interested in, and will dump its property to stdout:
+    
+    
+    $ xprop WM_CLASS
+    WM_CLASS(STRING) = "st-256color", "st-256color"
+    
+    $ xprop WM_CLASS
+    WM_CLASS(STRING) = "st-256color", "st-256color"
+    
+    $ xprop WM_NAME
+    WM_NAME(UTF8_STRING) = "vim"
+    
+
+Build and install:
+    
+    
+    make && sudo make install
+    
+
+To autostart `dwm`:
+
+Edit `~/.xinitrc` with following:
+    
+    
+    exec dwm
+    
+
+Then `startx`. A black screen desktop should appear. This is good.
+
+### i3-gaps
+
+`i3-gaps` is a fork of the excellent `i3wm` tiling window manager. As its name implies it supports placing gaps (i.e. regions of space) between the tiled windows, providing a very neat and satisfying perception of order when windows are automatically laid out.
+
+![i3-gaps in action][14]
+    
+    
+    pacman -S xorg-server xorg-xinit
+    pacman -S xf86-video-amdgpu
+    pacman -S i3-gaps i3status rxvt-unicode dmenu
+    
+
+To autostart i3:
+
+Edit `~/.xinitrc` with following:
+    
+    
+    exec i3
+    
+
+Then `startx`. A black screen desktop should appear. This is good.
+
+## Default applications
+
+Programs that handle arbitrary files (e.g. web browsers, irc clients, file managers) delegate to a general purpose resource handler. _XDG MIME Applications_ is the ubiquitous option here, and is not only an implementation, but a full blown specification.
+
+To check a default program to be used based on MIME type:
+    
+    
+    xdg-mime query default text/plain
+    
+
+Or, if unsure of the MIME type, to check a default program based on a sample input file:
+    
+    
+    xdg-mime query filetype 2016-01-12-jdbc-overflow.markdown
+    
+
+To set a default handler, the program needs a, the program needs a `.desktop` launcher. First make sure one exists:
+    
+    
+    $ locate -i nvim.desktop
+    /usr/share/applications/nvim.desktop
+    
+
+Then bind it as the default for a given file (MIME) type:
+    
+    
+    xdg-mime default nvim.desktop text/plain
+    
+
+Test it out:
+    
+    
+    xdg-open 2018-01-08-pki.markdown
+    
+
+These are stored in `~/.local/mimeapps.list`.
+
+## Ricing
+
+> The term ricing originates from the auto enthusiast community, and was used predominantly as a perjorative to describe people who make modifications to their (usually Japanese) cars that add visual flair, but don't improve performance. In the context of unixporn, it means customizing your desktop to make it look snazzy.
+
+This rice was used on `i3`. While I enjoyed my brief time using this excellent tiler, I have moved to using suckless `dwm`. While these ricing hacks should apply to various window managers and tilers, I havent verified.
+
+### Wallpaper
+    
+    
+    pacman -S feh
+    
+
+Add a task runner to `~/.config/i3/config` to always set the wallpaper whenever i3 runs.
+    
+    
+    exec_always --no-startup-id feh --bg-scale /home/ben/Pictures/Wallpapers/nature3.jpg
+    
+
+### Sound
+    
+    
+    pacman -S alsa-utils
+    
+
+Can now run `alsamixer` to manage the sound card.
+
+### Load Xresources at startup
+
+Used to customise the appearance of graphical (i.e. X!) apps such as `dwm`, `st` and `urxvt`.
+
+Ensure that `.XResouces` is read in when starting X by placing this in your `~/.xinitrc`:
+    
+    
+    xrdb -merge ~/.Xresources &
+    
+
+If you dont have an `~/.Xresources` of your own, checkout my [dots][15].
+
+Remember to run `xrdb ~/.Xresources` after editing it.
+
+### Making GTK and QT apps pretty
+    
+    
+    pacman -S lxappearance gtk-chtheme gtk-engine-murrine gtk-engines gnome-themes-extra qt5ct
+    
+
+Define the following environment variables to override default QT styling:
+    
+    
+    export QT_STYLE_OVERRIDE=adwaita
+    export QT_QPA_PLATFORMTHEME="qt5ct"
+    export QT_AUTO_SCREEN_SCALE_FACTOR=0
+    
+
+This is a worth while endevour to take. I now have a very tailored system that works exactly how I want, without any bloat, and its FAST. Finally if interested, all my configuration from `vim` to `st` and `dwm` is in my [dots][15] repo.
+
+I've have recently discovered [suckless][9], and their [philosophy][11] towards software really resonates strongly with me.
+
+> We are the home of quality software such as dwm, dmenu, st and plenty of other tools, with a focus on simplicity, clarity and frugality. Our philosophy is about keeping things simple, minimal and usable.
+
+[1]: https://wiki.archlinux.org/index.php/Arch_terminology#The_Arch_Way
+[2]: https://wiki.archlinux.org/
+[3]: https://www.archlinux.org/groups/x86_64/
+[4]: https://www.archlinux.org/groups/x86_64/base-devel/
+[5]: https://wiki.archlinux.org/index.php/Arch_boot_process#Boot_loader
+[6]: https://wiki.archlinux.org/index.php/NetworkManager#nmcli_examples
+[7]: https://wiki.archlinux.org/index.php/AMDGPU
+[8]: https://wiki.archlinux.org/index.php/NVIDIA
+[9]: https://suckless.org/
+[10]: https://dwm.suckless.org/
+[11]: https://suckless.org/philosophy/
+[12]: https://dwm.suckless.org/patches/
+[13]: https://dwm.suckless.org/patches/center/
+[14]: https://www.bencode.net/images/i3-snap.jpg "i3-gaps in action"
+[15]: https://github.com/bm4cs/dots
+
+  
+
+`dwm` is their minimal tiling window manager.
+
+> Because dwm is customized through editing its source code, it's pointless to make binary packages of it. This keeps its userbase small and elitist. No novices asking stupid questions.
+
+The configuration of dwm is done by creating a custom `config.h`, by editing the `config.def.h` header, and (re)compiling the source code using the provided makefile.
+    
+    
+    pacman -Sy xorg-server xorg-xinit
+    pacman -Sy xf86-video-amdgpu
+    pacman -Sy dmenu git
+    
+
+Clone the `dwm` Git repo, and my patches:
+    
+    
+    git clone https://git.suckless.org/dwm
+    git clone https://github.com/bm4cs/dots.git
+    cd ~/dotfiles && ./install.sh
+    
+
+Apply [patches][12] for specific features wanted. The only patch I apply is [center][13]:
+
+> Add an iscentered rule to automatically center clients on the current monitor.
+
+This lets you define rules in `config.def.h` for certain programs (e.g. pulsemixer) that you'd like to launch center screen, by adding an `iscentered` rule to automatically center clients on the current monitor:
+    
+    
+    static const Rule rules[] = {
+        /* xprop(1):
+         *	WM_CLASS(STRING) = instance, class
+         *	WM_NAME(STRING) = title
+         */
+        /* class      instance       title       tags mask     iscentered     isfloating   monitor */
+        { "Gimp",     NULL,          NULL,       0,            0,             1,           -1 },
+    
+
+To you can see the `WM_CLASS` and `WM_NAME` properties of the X window are used by the rule chain to figure out what rules to apply. To determine these values, use `xprop` which will give you a mouse cursor to select the window of the running program you are interested in, and will dump its property to stdout:
+    
+    
+    $ xprop WM_CLASS
+    WM_CLASS(STRING) = "st-256color", "st-256color"
+    
+    $ xprop WM_CLASS
+    WM_CLASS(STRING) = "st-256color", "st-256color"
+    
+    $ xprop WM_NAME
+    WM_NAME(UTF8_STRING) = "vim"
+    
+
+Build and install:
+    
+    
+    make && sudo make install
+    
+
+To autostart `dwm`:
+
+Edit `~/.xinitrc` with following:
+    
+    
+    exec dwm
+    
+
+Then `startx`. A black screen desktop should appear. This is good.
+
+### i3-gaps
+
+`i3-gaps` is a fork of the excellent `i3wm` tiling window manager. As its name implies it supports placing gaps (i.e. regions of space) between the tiled windows, providing a very neat and satisfying perception of order when windows are automatically laid out.
+
+![i3-gaps in action][14]
+    
+    
+    pacman -S xorg-server xorg-xinit
+    pacman -S xf86-video-amdgpu
+    pacman -S i3-gaps i3status rxvt-unicode dmenu
+    
+
+To autostart i3:
+
+Edit `~/.xinitrc` with following:
+    
+    
+    exec i3
+    
+
+Then `startx`. A black screen desktop should appear. This is good.
+
+## Default applications
+
+Programs that handle arbitrary files (e.g. web browsers, irc clients, file managers) delegate to a general purpose resource handler. _XDG MIME Applications_ is the ubiquitous option here, and is not only an implementation, but a full blown specification.
+
+To check a default program to be used based on MIME type:
+    
+    
+    xdg-mime query default text/plain
+    
+
+Or, if unsure of the MIME type, to check a default program based on a sample input file:
+    
+    
+    xdg-mime query filetype 2016-01-12-jdbc-overflow.markdown
+    
+
+To set a default handler, the program needs a, the program needs a `.desktop` launcher. First make sure one exists:
+    
+    
+    $ locate -i nvim.desktop
+    /usr/share/applications/nvim.desktop
+    
+
+Then bind it as the default for a given file (MIME) type:
+    
+    
+    xdg-mime default nvim.desktop text/plain
+    
+
+Test it out:
+    
+    
+    xdg-open 2018-01-08-pki.markdown
+    
+
+These are stored in `~/.local/mimeapps.list`.
+
+## Ricing
+
+> The term ricing originates from the auto enthusiast community, and was used predominantly as a perjorative to describe people who make modifications to their (usually Japanese) cars that add visual flair, but don't improve performance. In the context of unixporn, it means customizing your desktop to make it look snazzy.
+
+This rice was used on `i3`. While I enjoyed my brief time using this excellent tiler, I have moved to using suckless `dwm`. While these ricing hacks should apply to various window managers and tilers, I havent verified.
+
+### Wallpaper
+    
+    
+    pacman -S feh
+    
+
+Add a task runner to `~/.config/i3/config` to always set the wallpaper whenever i3 runs.
+    
+    
+    exec_always --no-startup-id feh --bg-scale /home/ben/Pictures/Wallpapers/nature3.jpg
+    
+
+### Sound
+    
+    
+    pacman -S alsa-utils
+    
+
+Can now run `alsamixer` to manage the sound card.
+
+### Load Xresources at startup
+
+Used to customise the appearance of graphical (i.e. X!) apps such as `dwm`, `st` and `urxvt`.
+
+Ensure that `.XResouces` is read in when starting X by placing this in your `~/.xinitrc`:
+    
+    
+    xrdb -merge ~/.Xresources &
+    
+
+If you dont have an `~/.Xresources` of your own, checkout my [dots][15].
+
+Remember to run `xrdb ~/.Xresources` after editing it.
+
+### Making GTK and QT apps pretty
+    
+    
+    pacman -S lxappearance gtk-chtheme gtk-engine-murrine gtk-engines gnome-themes-extra qt5ct
+    
+
+Define the following environment variables to override default QT styling:
+    
+    
+    export QT_STYLE_OVERRIDE=adwaita
+    export QT_QPA_PLATFORMTHEME="qt5ct"
+    export QT_AUTO_SCREEN_SCALE_FACTOR=0
+    
+
+This is a worth while endevour to take. I now have a very tailored system that works exactly how I want, without any bloat, and its FAST. Finally if interested, all my configuration from `vim` to `st` and `dwm` is in my [dots][15] repo.
+
+I've have recently discovered [suckless][9], and their [philosophy][11] towards software really resonates strongly with me.
+
+> We are the home of quality software such as dwm, dmenu, st and plenty of other tools, with a focus on simplicity, clarity and frugality. Our philosophy is about keeping things simple, minimal and usable.
+
+[1]: https://wiki.archlinux.org/index.php/Arch_terminology#The_Arch_Way
+[2]: https://wiki.archlinux.org/
+[3]: https://www.archlinux.org/groups/x86_64/
+[4]: https://www.archlinux.org/groups/x86_64/base-devel/
+[5]: https://wiki.archlinux.org/index.php/Arch_boot_process#Boot_loader
+[6]: https://wiki.archlinux.org/index.php/NetworkManager#nmcli_examples
+[7]: https://wiki.archlinux.org/index.php/AMDGPU
+[8]: https://wiki.archlinux.org/index.php/NVIDIA
+[9]: https://suckless.org/
+[10]: https://dwm.suckless.org/
+[11]: https://suckless.org/philosophy/
+[12]: https://dwm.suckless.org/patches/
+[13]: https://dwm.suckless.org/patches/center/
+[14]: https://www.bencode.net/images/i3-snap.jpg "i3-gaps in action"
+[15]: https://github.com/bm4cs/dots
+
+  
