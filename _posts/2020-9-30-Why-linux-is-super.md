@@ -7,7 +7,7 @@ comments: true
 
 # 10 Reasons Why Linux Is Better Than Windows
 
-​It is often seen that people get confused over choosing Windows or Linux as a host operating system in both server and desktop spaces. People will focus on aspects of cost, the functionality provided, hardware compatibility, support, reliability, security, pre-built software, cloud-readiness, etc. before they finalize. In this regard, this article covers ten reasons for using Linux over Windows.  
+It is often seen that people get confused over choosing Windows or Linux as a host operating system in both server and desktop spaces. People will focus on aspects of cost, the functionality provided, hardware compatibility, support, reliability, security, pre-built software, cloud-readiness, etc. before they finalize. In this regard, this article covers ten reasons for using Linux over Windows.  
 
 ## 10 Reasons Why Linux Is Better Than Windows
 
@@ -23,7 +23,7 @@ In Windows world, you cannot modify the OS as its source code is not open source
 
 ### 2\. Beginner friendly and easy to use
 
-![linux mint easy to use][3]!
+![linux mint easy to use][3]
 Windows OS is one of the simplest desktop OS available today.  Its graphical user-friendliness is exceptional. Though Windows has a relatively minimal learning curve, Linux distros like Ubuntu, Elementary OS, Linux Mint, etc. are striving to improve the user experience that makes the transition from Windows to Linux become smooth and easy.
 
 Linux distros allow the user to choose one of the various desktop environments available: Cinnamon, MATE, KDE, Xfce, LXDE, GNOME, etc. If a Windows user is looking to migrate to Linux, [WINE][4] (Wine Is Not an Emulator) can be installed to have a feel of MS Windows on a Linux system.  
@@ -36,7 +36,7 @@ Traditionally Unix-like systems are known for running for years without a single
 
 ### 4\. Hardware
 
-![linux better hardware support][5]!
+![linux better hardware support][5]
 Linux systems are known for consuming fewer system resources (RAM, disk space, etc.) when compared to Windows.  Hardware vendors already realized the popularity of Linux and started making Linux compliant hardware/drivers. When running the OS on older hardware, Windows is slower.
 
 Linux distros like Lubuntu, Knoppix, LXLE, antiX, Puppy Linux are best suitable for aging machines.  Old horses like 386 or 486 machines with decent RAM (>= 124/256) can run Linux.  
@@ -74,7 +74,7 @@ When undergoing a software update or installing/uninstalling software on Linux s
 
 ### 9\. Server segment
 
-![linux server][8]!
+![linux server][8]
 
 Linux is installed on the majority of servers demonstrating that it is the best choice with a minimal resource footprint. Even rivals are using Linux on their offerings. As software applications are moving to cloud platforms, windows servers are getting phased out to make room for Linux servers. Majority of the supercomputers run on Linux.
 
@@ -82,7 +82,7 @@ Though the battle between Linux and Windows continues in desktop-segment when it
 
 ### 10\. Linux is everywhere
 
-![linux is everywhere][9]!
+![linux is everywhere][9]
 
 Yes, Linux is everywhere. From the smallest device to the largest supercomputer, Linux is everywhere.  It can be a car, router, phone, medical devices, plane, TV, satellite, watch or school tablet, Linux will be there.
 
@@ -90,7 +90,7 @@ The inventor Linus Torvalds himself would not have imagined about this kind of s
 
 ## Conclusion
 
-​There is a saying – variety is the spice of life.  It is true with respect to Linux distros.  There are more than 600 active different distros to choose from. Each is different on its own and meant for a specific purpose. Linux distros are highly customizable when compared to Windows.  The above reasons mentioned are is just the tip of the iceberg. There is so much more than you could with Linux. Linux is powerful, flexible, secure, reliable, stable, fun… than Windows. One should always keep in mind that – free is not the best just like expensive is not the best.
+There is a saying – variety is the spice of life.  It is true with respect to Linux distros.  There are more than 600 active different distros to choose from. Each is different on its own and meant for a specific purpose. Linux distros are highly customizable when compared to Windows.  The above reasons mentioned are is just the tip of the iceberg. There is so much more than you could with Linux. Linux is powerful, flexible, secure, reliable, stable, fun… than Windows. One should always keep in mind that – free is not the best just like expensive is not the best.
 
 Linux will undoubtedly emerge as the winner when all aspects are considered. There is no reason why you would not choose Linux instead of Windows.  Let us know your thoughts on how you feel about Linux.  
 
